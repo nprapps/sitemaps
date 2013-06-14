@@ -76,13 +76,13 @@ def _deploy_to_s3():
     """
     Deploy the gzipped stuff to S3.
     """
-    s3cmd = 's3cmd -P --add-header=Cache-Control:max-age=5 --guess-mime-type --recursive --exclude-from gzip_types.txt sync gzip/ %s'
-    s3cmd_gzip = 's3cmd -P --add-header=Cache-Control:max-age=5 --add-header=Content-encoding:gzip --guess-mime-type --recursive --exclude "*" --include-from gzip_types.txt sync gzip/ %s'
+    s3cmd = 's3cmd -P --add-header=Cache-Control:max-age=5 --guess-mime-type --recursive --exclude-from gzip_types.txt put gzip/ %s'
+    s3cmd_gzip = 's3cmd -P --add-header=Cache-Control:max-age=5 --add-header=Content-encoding:gzip --guess-mime-type --recursive --exclude "*" --include-from gzip_types.txt put gzip/ %s'
 
     for bucket in env.s3_buckets:
         env.s3_bucket = bucket
-        local(s3cmd % ('s3://%(s3_bucket)s/%(project_slug)s/' % env))
-        local(s3cmd_gzip % ('s3://%(s3_bucket)s/%(project_slug)s/' % env))
+        local(s3cmd % ('s3://%(s3_bucket)s/' % env))
+        local(s3cmd_gzip % ('s3://%(s3_bucket)s/' % env))
 
 def _gzip_www():
     """
@@ -96,9 +96,6 @@ def deploy():
     Deploy the latest app to S3 and, if configured, to our servers.
     """
     require('settings', provided_by=[production, staging])
-
-    if (env.settings == 'production' and env.branch != 'stable'):
-        _confirm("You are trying to deploy the '%(branch)s' branch to production.\nYou should really only deploy a stable branch.\nDo you know what you're doing?" % env)
 
     render()
     _gzip_www()
