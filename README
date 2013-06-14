@@ -1,0 +1,7 @@
+Add projects that have sitemaps to the Google Doc:
+
+https://docs.google.com/spreadsheet/ccc?key=0AlXMOHKxzQVRdGQ5eDBzYUhQQWI3VjNtQ29iWTdGS0E#gid=0
+
+Then redeploy:
+
+fab production deploy
