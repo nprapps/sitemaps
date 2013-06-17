@@ -30,6 +30,5 @@ pip-log.txt
 .DS_store
 gzip
 
-node_modules
-www/*.xml
+www/sitemap.xml
 data/index.csv
