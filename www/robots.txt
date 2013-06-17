@@ -1,0 +1,4 @@
+User-agent: *
+Disallow:
+
+Sitemap: http://apps.npr.org/sitemap.xml
